@@ -28,6 +28,7 @@ def plot_equipotential_lines(m_1, m_2, d):
         return sqrt((x - x_1) ** 2 + y ** 2), sqrt((x - x_2) ** 2 + y ** 2)
 
     # Gravitational constant
+    # G = 6.67408E-11
     G = 1
 
     def eff_potential(x, y):
@@ -42,14 +43,25 @@ def plot_equipotential_lines(m_1, m_2, d):
     x_mat, y_mat = np.meshgrid(x_space, y_space)
     # calculate teh potential on the matrix
     z_mat = np.vectorize(eff_potential)(x_mat, y_mat)
+    z_mat = -z_mat
 
     # contour line spacing
-    line_spacing = np.logspace(np.min(z_mat), np.max(z_mat), num=10)
+    # line_spacing = np.linspace(0, 100, num=35)       # 2
+    linear_lines = np.linspace(0, 80, num=35)       # 2
+    log_lines = np.logspace(np.log10(81), 3, num=20)  # v3
+    # print(linear_lines)
+    # print(log_lines)
+    # linear_lines = np.append(linear_lines, )
+    # print(linear_lines)
+    line_spacing = np.append(linear_lines, log_lines)
+    #print(line_spacing)
 
     # plot the contour
-    plt.contourf(x_space, y_space, z_mat, line_spacing)
+    plt.contour(x_space, y_space, z_mat, line_spacing, colors='black')
+    plt.axis('off')
     plt.show()
 
-plot_equipotential_lines(5, 10, 100)
+
+plot_equipotential_lines(1, 40, 1)
 
 
